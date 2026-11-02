@@ -5,11 +5,7 @@ Module that defines the base Player class and basic strategies for the IPD.
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-
-try:
-    from dilemma import C, D, Dilemma
-except ImportError:
-    from src.dilemma import C, D, Dilemma
+from dilemma import Dilemma, C, D
 
 
 class Player(ABC):
