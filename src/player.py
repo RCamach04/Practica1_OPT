@@ -6,7 +6,7 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 from dilemma import Dilemma, C, D
-
+from random import random
 
 class Player(ABC):
     """
