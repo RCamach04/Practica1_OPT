@@ -5,7 +5,7 @@ Module that defines the base Player class and basic strategies for the IPD.
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from dilemma import Dilemma, C, D
+from .dilemma import Dilemma, C, D
 from random import random
 
 class Player(ABC):
@@ -171,22 +171,20 @@ class StatisticalPlayer(Player):
 
     def __init__(self, dilemma: Dilemma, name: str = "") -> None:
         super().__init__(dilemma, name or "statistical")
-        self.cooperate_count = 0
-        self.defect_count = 0
-        self.last_adversary_action = None
 
     def strategy(self, opponent: Player) -> int:
         LAST_PROBABILITY: float = 0.2
-        if not self.last_adversary_action:
+
+        if len(opponent.history) == 0:
             return C
-        self.last_adversary_action = opponent.history[-1]
+        last_adversary_action = opponent.history[-1]
         random_value = random()
-        if self.last_adversary_action is C:
-            self.cooperate_count += 1
-            probability_cooperate = LAST_PROBABILITY + (1 - LAST_PROBABILITY) * (self.cooperate_count / (self.cooperate_count + self.defect_count))
+        cooperate_count = opponent.history.count(C)
+        defect_count = opponent.history.count(D)
+        if last_adversary_action is C:
+            probability_cooperate = LAST_PROBABILITY + (1 - LAST_PROBABILITY) * (cooperate_count / (cooperate_count + defect_count))
         else:
-            self.defect_count += 1
-            probability_defect = LAST_PROBABILITY + (1 - LAST_PROBABILITY) * (self.defect_count / (self.cooperate_count + self.defect_count))
+            probability_defect = LAST_PROBABILITY + (1 - LAST_PROBABILITY) * (defect_count / (cooperate_count + defect_count))
             probability_cooperate = 1 - probability_defect
 
         if random_value <= probability_cooperate:

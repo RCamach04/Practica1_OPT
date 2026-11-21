@@ -2,8 +2,8 @@ from __future__ import annotations
 
 import random
 
-from dilemma import Dilemma, C, D
-from player import Player
+from .dilemma import C, D
+from .player import Player
 
 
 class Game:

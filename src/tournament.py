@@ -2,12 +2,11 @@ from __future__ import annotations
 
 import copy
 import itertools
-import random
 import matplotlib.pyplot as plt
 
-from player import Player
-from dilemma import Dilemma, C, D
-from game import Game
+from .player import Player
+from .dilemma import Dilemma
+from .game import Game
 
 
 class Tournament:
@@ -101,15 +100,15 @@ class Tournament:
         colors = plt.cm.viridis([i / max(len(names) - 1, 1) for i in range(len(names))])
 
         plt.figure(figsize=(10, 6))
-        
+
         bars = plt.bar(positions, scores, color=colors, edgecolor='black')
-        
-        plt.xticks(positions, names, rotation=45, ha="right") 
-        
+
+        plt.xticks(positions, names, rotation=45, ha="right")
+
         plt.xlabel("Player")
         plt.ylabel("Score")
         plt.title("Tournament Ranking")
-        
+
         plt.bar_label(bars, fmt='%g', padding=3)
 
         plt.tight_layout()
